@@ -20,14 +20,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import de.SebastianMikolai.PlanetFx.IceHockey.HG;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Addons.AddonManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Arena.Arena;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Arena.ArenaManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Classes.ClassManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.SignManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.PlayerManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.TeamManager;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.Lang;
 
 public class HGAPI {
 	
@@ -38,22 +36,10 @@ public class HGAPI {
 	private static PlayerManager players;
 	private static TeamManager teams;
 	private static List<Color> colors;
-	private static AddonManager addons;
-	private String version = null;
-	private static boolean old = false;
+	private static String prefix = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "IceHockey" + ChatColor.DARK_GRAY + "] " + ChatColor.GOLD;
 	
 	public HGAPI(HG _plugin) {
 		plugin = _plugin;
-		version = Bukkit.getBukkitVersion();
-		version = version.substring(0, 6);
-		version = version.replaceAll("-", "");
-		if (this.version.startsWith("1.5")) {
-			old = true;
-			Bukkit.getConsoleSender().sendMessage(Lang.TITLE.toString() + ChatColor.RED + "Plugin goes into compatibility mode 1.5. Some features may be unavailable.");
-		} else if (this.version.startsWith("1.6")) {
-			old = true;
-      	Bukkit.getConsoleSender().sendMessage(Lang.TITLE.toString() + ChatColor.RED + "Plugin goes into compatibility mode 1.6. Some features may be unavailable.");
-		}
 		init();
 	}
 	
@@ -81,14 +67,8 @@ public class HGAPI {
     	colors.add(Color.TEAL);
     	colors.add(Color.WHITE);
     	colors.add(Color.YELLOW);
-    	addons = new AddonManager(); 
     	getTeamManager().loadAllTeams();
     	getArenaManager().loadAllArenas();
-    	getAddonManager().loadAddonAll();
-	}
-	
-	public static boolean checkOldMCVersion() {
-		return old;
 	}
 	
 	public static ArenaManager getArenaManager() {
@@ -119,10 +99,10 @@ public class HGAPI {
 		return colors;
 	}
 	
-	public static void sendMessage(Player player, String message, boolean sound) {
-		player.sendMessage(Lang.TITLE.toString() + message);
+	public static void sendMessage(Player p, String msg, boolean sound) {
+		p.sendMessage(prefix + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages." + msg)));
 		if (sound) {
-			playSound(player, player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+			playSound(p, p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 		}
 	}
 	
@@ -186,44 +166,43 @@ public class HGAPI {
 		}
 		if (arena.getFirstTeamLobbyLocation() == null) {
 			arena.setFirstTeamLobbyLocation(loc);
-			sendMessage(player, Lang.SECOND_TEAM_SET_LOBBY.toString(), true);
+			sendMessage(player, "second-team-set-lobby", true);
 			return;
 		}
 		if (arena.getSecondTeamLobbyLocation() == null) {
 			arena.setSecondTeamLobbyLocation(loc);
-			sendMessage(player, Lang.FIRST_TEAM_SET_SPAWN.toString(), true);
+			sendMessage(player, "first-team-set-spawn", true);
 			return;
 		}
 		if (arena.getFirstTeamSpawnLocation() == null) {
 			arena.setFirstTeamSpawnLocation(loc);
-			sendMessage(player, Lang.SECOND_TEAM_SET_SPAWN.toString(), true);
+			sendMessage(player, "second-team-set-spawn", true);
 			return;
 		}
 		if (arena.getSecondTeamSpawnLocation() == null) {
 			arena.setSecondTeamSpawnLocation(loc);
-			sendMessage(player, Lang.PUCK_SET_SPAWN.toString(), true);
+			sendMessage(player, "puck-set-spawn", true);
 			return;
 		}
 		if (arena.getPuckLocation() == null) {
 			arena.setPuckLocation(loc);
-			sendMessage(player, Lang.SET_FIRST_GATES.toString() + Lang.ICON_NEXT_STAGE, true);
+			sendMessage(player, "set-first-gates", true);
 			return;
 		}
 		if (!arena.isFirstGatesFulled()) {
 			arena.addFirstTeamGate(loc);
-			sendMessage(player, Lang.GATE_STORED.toString(), true);
+			sendMessage(player, "gate-stored", true);
 			return;
 		}
 		if (!arena.isSecondGatesFulled()) {
 			arena.addSecondTeamGate(loc);
-			sendMessage(player, Lang.GATE_STORED.toString(), true);
+			sendMessage(player, "gate-stored", true);
 			return;
 		}
 		getArenaManager().save(arena);
 		getArenaManager().addArena(arena);
 		getPlugin().getDevArenas().remove(player.getName());
-		getPlugin().getArenaCreators().remove(player);
-		sendMessage(player, Lang.ARENA_SAVED.toString(), true);
+		sendMessage(player, "arena-saved", true);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -240,9 +219,5 @@ public class HGAPI {
 			return new ItemStack(Material.getMaterial(matId), amount, data);
 		}
 		return new ItemStack(Material.getMaterial(matId));
-	}
-	
-	public static AddonManager getAddonManager() {
-		return addons;
 	}
 }

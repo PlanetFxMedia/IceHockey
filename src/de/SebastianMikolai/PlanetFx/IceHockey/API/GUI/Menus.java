@@ -7,9 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import de.SebastianMikolai.PlanetFx.IceHockey.API.HGAPI;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Addons.Addon;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Arena.Arena;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.Lang;
 import de.SebastianMikolai.PlanetFx.IceHockey.Commands.Icons;
 
 public class Menus {
@@ -18,14 +16,13 @@ public class Menus {
 		CustomGUIMenu menu = new CustomGUIMenu(ChatColor.DARK_AQUA + "[PlanetFxIceHockey]", 9);
 		menu.addItem(Icons.getArenas(), 0);
 		if (HGAPI.getPlayerManager().getHockeyPlayer(player.getName()) != null) {
-			menu.addItem(Icons.getArenaLeave(Lang.ICON_ARENA_LEAVE.toString()), 1);
+			menu.addItem(Icons.getArenaLeave(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("icon-arena-leave"))), 1);
 		}
 		if ((player.hasPermission("hg.admin")) || (player.isOp())) {
 			menu.addItem(Icons.getReload(), 8);
 			menu.addItem(Icons.getChangeLang(), 2); 
 			menu.addItem(Icons.getArenaManager(), 3);
 			menu.addItem(Icons.getTeamManager(), 4);
-			menu.addItem(Icons.getAddons(), 5);
 			if (HGAPI.getPlugin().getArenaCreators().contains(player)) {
 				menu.addItem(Icons.getCancel(), 7);
 				if (HGAPI.getPlugin().getDevArenas().containsKey(player.getName())) {
@@ -115,14 +112,6 @@ public class Menus {
 		}
 		for (String arena : musor) {
 			menu.addItem(Icons.getTeam(arena), musor.indexOf(arena));
-		}
-		player.openInventory(menu.getInventory());
-	}
-	
-	public static void openAddonsMenu(Player player) {
-		CustomGUIMenu menu = new CustomGUIMenu(Lang.ICON_ADDONS.toString(), 45);
-		for (Addon addon : HGAPI.getAddonManager().getAddons()) {
-			menu.addItem(Icons.getAddon(addon.getName()), HGAPI.getAddonManager().getAddons().indexOf(addon));
 		}
 		player.openInventory(menu.getInventory());
 	}

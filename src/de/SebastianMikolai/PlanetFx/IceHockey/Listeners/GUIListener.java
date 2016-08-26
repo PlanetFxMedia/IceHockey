@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import de.SebastianMikolai.PlanetFx.IceHockey.API.HGAPI;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Addons.Addon;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Arena.Arena;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.GUI.CustomGUIMenu;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.GUI.Menus;
@@ -120,9 +119,6 @@ public class GUIListener implements Listener {
 						HGAPI.getPlugin().getTeamCreators().remove(player);
 						HGAPI.sendMessage(player, Lang.CREATE_TEAM_CANCELLED.toString(), true);
 					}
-				} else if (Icons.getAddons().getItemMeta().getDisplayName().equals(clicked.getItemMeta().getDisplayName())) {
-					player.closeInventory();
-					Menus.openAddonsMenu(player);
 				}
 			} else if (Icons.getChangeLang().getItemMeta().getDisplayName().equals(name)) {
 				event.setCancelled(true);
@@ -230,19 +226,6 @@ public class GUIListener implements Listener {
 					} else if (!arena.getPlayers().isEmpty()) {
 						arena.stopArena();
 					}
-				}
-			} else if (Icons.getAddons().getItemMeta().getDisplayName().equals(name)) {
-				event.setCancelled(true);
-				if (HGAPI.getAddonManager().getAddon(ChatColor.stripColor(clicked.getItemMeta().getDisplayName())) != null) {
-					Addon addon = HGAPI.getAddonManager().getAddon(ChatColor.stripColor(clicked.getItemMeta().getDisplayName()));
-					if (addon.isEnabled()) {
-						HGAPI.getAddonManager().disableAddon(addon);
-						HGAPI.sendMessage(player, Lang.ADDON_DISABLED.toString(), true);
-					} else if (!addon.isEnabled()) {
-						HGAPI.getAddonManager().enableAddon(addon);
-						HGAPI.sendMessage(player, Lang.ADDON_ENABLED.toString(), true);
-					}
-					Menus.openAddonsMenu(player);
 				}
 			}
 		}

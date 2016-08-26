@@ -15,8 +15,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import de.SebastianMikolai.PlanetFx.IceHockey.API.HGAPI;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Classes.ClassType;
@@ -30,7 +28,6 @@ import de.SebastianMikolai.PlanetFx.IceHockey.API.Events.StartPlayMusicEvent;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.HockeyPlayer;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.Team;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.ItemGiver;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.Lang;
 import de.SebastianMikolai.PlanetFx.IceHockey.Runnables.ArenaRunnable;
 import de.SebastianMikolai.PlanetFx.IceHockey.Runnables.CountToStartRunnable;
 
@@ -40,7 +37,7 @@ public class Arena {
 	private ArrayList<Location> blue_gates = new ArrayList<Location>();
 	private String name;
 	private ArrayList<HockeyPlayer> players = new ArrayList<HockeyPlayer>();
-	private int max = HGAPI.getPlugin().getConfig().getInt("Game.MaxPlayers");
+	private int max = HGAPI.getPlugin().getConfig().getInt("GameSettings.MaxPlayers");
 	private Team team1;
 	private Team team2;
 	private Location puck_loc;
@@ -250,16 +247,12 @@ public class Arena {
 	      		player.getBukkitPlayer().teleport(getSecondTeamLobbyLocation());  
 	      		getSecondTeam().getMembers().add(player);
 	      	}
-	      	if (HGAPI.checkOldMCVersion()) {
-	      		player.getBukkitPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 4, 20));
-	      	} else if (!HGAPI.checkOldMCVersion()) {
-	      		player.getBukkitPlayer().setHealth(player.getBukkitPlayer().getMaxHealth());
-	      	}
+	        player.getBukkitPlayer().setHealth(player.getBukkitPlayer().getMaxHealth());
 	      	player.getBukkitPlayer().setFoodLevel(20);
 	      	player.getBukkitPlayer().setGameMode(GameMode.SURVIVAL);
 	      	getPlayers().add(player);
 	      	HGAPI.getPlayerManager().addPlayer(player.getName(), player);
-	      	broadcastMessage(ChatColor.YELLOW + player.getName() + Lang.PLAYER_JOIN_ARENA.toString() + ChatColor.GREEN + getName());
+	      	broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.player-join-arena")) + ChatColor.GREEN + getName());
 	    }
   	}
   	
@@ -283,20 +276,15 @@ public class Arena {
   			getPlayers().remove(player);
   			team.getMembers().remove(player);
   			HGAPI.getPlayerManager().removePlayer(player.getName());
-  			if ((getWinnerTeam() != null) && (team.getName().equals(getWinnerTeam().getName()))) {
-  				rewardsWinner(player);
-  			} else if ((getLoserTeam() != null) && (team.getName().equals(getLoserTeam().getName()))) {
-  				rewardsLoser(player);
-  			}
-  			broadcastMessage(ChatColor.YELLOW + player.getName() + Lang.PLAYER_LEAVE_ARENA.toString() + ChatColor.GREEN + getName());
+  			broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.player-leave-arena")) + ChatColor.GREEN + getName());
   		}
   	}
   	
   	private void setupPuck() {
-  		String material_config = HGAPI.getPlugin().getConfig().getString("Game.puck.material");
+  		String material_config = HGAPI.getPlugin().getConfig().getString("GameSettings.Puck.Material");
   		ItemStack item = new ItemStack(Material.getMaterial(material_config));
   		ItemMeta meta = item.getItemMeta();
-  		meta.setDisplayName(Lang.PUCK_NAME.toString());
+  		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("puck-name")));
   		item.setItemMeta(meta);
   		setPuck(item);
   	}
@@ -307,7 +295,7 @@ public class Arena {
   		getCountToStartRunnable().cancel();
     	this.countrunnable = null;
     	if (!event.isCancelled()) {
-    		if (getPlayers().size() < HGAPI.getPlugin().getConfig().getInt("Game.MinPlayers")) {
+    		if (getPlayers().size() < HGAPI.getPlugin().getConfig().getInt("GameSettings.MinPlayers")) {
     			stopArena();
     		}
     		if (getPuck() == null) {
@@ -324,7 +312,7 @@ public class Arena {
     		}
     		setPuckEntity(puck);
     		startMainRunnable(puck);
-    		if (HGAPI.getPlugin().getConfig().getBoolean("Game.MusicMatch")) {
+    		if (HGAPI.getPlugin().getConfig().getBoolean("GameSettings.MusicMatch")) {
     			startPlayMusic();
     		}
     	}
@@ -349,18 +337,18 @@ public class Arena {
   			team.getMembers().add(player);
   			player.setTeam(team);
   			player.setAllowTeleport(true);
-  			if (type.getName().equals("Winger")) {
+  			if (type.getName().equals("Angreifer")) {
   				player.getTeam().addWinger(player);
-  			} else if (type.getName().equals("Defender")) {
+  			} else if (type.getName().equals("Verteidiger")) {
   				player.getTeam().addDefend(player);
-  			} else if (type.getName().equals("Goalkeeper")) {
+  			} else if (type.getName().equals("Torwart")) {
   				if (player.getTeam().getGoalKeeper() == null) {
   					player.getTeam().setGoalkeeper(player);
   				} else {
   					player.getBukkitPlayer().getInventory().clear();
   					player.getBukkitPlayer().getInventory().setArmorContents(null);
   					player.getBukkitPlayer().updateInventory();
-  					player.setType(HGAPI.getClassManager().getClass("Winger"));
+  					player.setType(HGAPI.getClassManager().getClass("Angreifer"));
   				}
   			}
   			ItemGiver.setItems(player, player.getTeam().getColor());
@@ -491,7 +479,7 @@ public class Arena {
   	}
   	
   	public void startCountToStartRunnable() {
-  		if (getPlayers().size() < HGAPI.getPlugin().getConfig().getInt("Game.MinPlayers")) {
+  		if (getPlayers().size() < HGAPI.getPlugin().getConfig().getInt("GameSettings.MinPlayers")) {
   			return;
   		}
   		for (HockeyPlayer players : getPlayers()) {
@@ -516,7 +504,7 @@ public class Arena {
   	}
   	
   	public void startMainRunnable(Puck puck) {
-  		int seconds = HGAPI.getPlugin().getConfig().getInt("Game.MatchTimer");
+  		int seconds = HGAPI.getPlugin().getConfig().getInt("GameSettings.MatchTimer");
   		this.mainrun = new ArenaRunnable(this, puck, seconds);
   		getMainRunnable().runTaskTimer(HGAPI.getPlugin(), 0L, 20L);
   	}
@@ -532,46 +520,32 @@ public class Arena {
   			HGAPI.playEffect(getWorld(), getPuckLocation(), Effect.ENDER_SIGNAL, 1);
   			HGAPI.playEffect(getWorld(), getPuckLocation(), Effect.MOBSPAWNER_FLAMES, 1);
   			HGAPI.playEffect(getWorld(), getPuckLocation(), Effect.SMOKE, 1);
-  			broadcastMessage(Lang.MATCH_CONTINUES.toString());
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("match-continues")));
   		} else if (event.isCancelled()) {
   			item.remove();
   		}
   	}
   	
-  	public void rewardsWinner(HockeyPlayer player) {
-  		for (String materialID : HGAPI.getPlugin().getWinnersRewards()) {
-  			ItemStack item = HGAPI.parseString(materialID);
-  			player.getBukkitPlayer().getInventory().addItem(new ItemStack[] { item });
-  		}
-  	}
-  	
-  	public void rewardsLoser(HockeyPlayer player) {
-  		for (String materialID : HGAPI.getPlugin().getLosersRewards()) {
-  			ItemStack item = HGAPI.parseString(materialID);
-  			player.getBukkitPlayer().getInventory().addItem(new ItemStack[] { item });
-  		}
-  	}
-  	
   	public void startRewards() {
   		if (getFirstTeamScores() > getSecondTeamScores()) {
-  			broadcastMessage(ChatColor.GOLD + getFirstTeam().getName() + Lang.TEAM_WIN.toString());
-  			broadcastMessage(Lang.RESULT.toString() + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
+  			broadcastMessage(ChatColor.GOLD + getFirstTeam().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("team-win")));
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("result")) + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
   			for (HockeyPlayer player : getFirstTeam().getMembers()) {
   				HGAPI.spawnRandomFirework(getWorld(), player.getBukkitPlayer().getLocation());
   			}
   			setWinnerTeam(getFirstTeam());
   			setLoserTeam(getSecondTeam());
   		} else if (getFirstTeamScores() < getSecondTeamScores()) {
-  			broadcastMessage(ChatColor.GOLD + getSecondTeam().getName() + Lang.TEAM_WIN.toString());
-  			broadcastMessage(Lang.RESULT.toString() + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
+  			broadcastMessage(ChatColor.GOLD + getSecondTeam().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("team-win")));
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("result")) + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
   			for (HockeyPlayer player : getSecondTeam().getMembers()) {
   				HGAPI.spawnRandomFirework(getWorld(), player.getBukkitPlayer().getLocation());
   			}
   			setWinnerTeam(getSecondTeam());
   			setLoserTeam(getFirstTeam());
   		} else if (getFirstTeamScores() == getSecondTeamScores()) {
-  			broadcastMessage(Lang.TIE.toString());
-  			broadcastMessage(Lang.RESULT.toString() + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("tie")));
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("result")) + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
   		}
   	}
   	
@@ -580,7 +554,7 @@ public class Arena {
   		Bukkit.getPluginManager().callEvent(event);
   		if (!event.isCancelled()) {
   			setRunning(false);
-  			if (HGAPI.getPlugin().getConfig().getBoolean("Game.MusicMatch")) {
+  			if (HGAPI.getPlugin().getConfig().getBoolean("GameSettings.MusicMatch")) {
   				getWorld().playEffect(getPuckLocation(), Effect.RECORD_PLAY, 0);
   			}
   			if (getCountToStartRunnable() != null) {

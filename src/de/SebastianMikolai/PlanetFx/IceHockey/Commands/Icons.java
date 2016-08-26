@@ -12,7 +12,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import de.SebastianMikolai.PlanetFx.IceHockey.API.HGAPI;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Addons.Addon;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Arena.Arena;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.HockeyPlayer;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.Lang;
@@ -230,39 +229,6 @@ public class Icons {
 		ItemStack item = new ItemStack(Material.BLAZE_POWDER);
 		ItemMeta meta = item.getItemMeta(); 
 		meta.setDisplayName(Lang.ICON_CANCEL.toString());
-		item.setItemMeta(meta);
-		return item;
-	}
-	
-	public static ItemStack getAddons() {
-		ItemStack item = new ItemStack(Material.CAULDRON_ITEM);
-		ItemMeta meta = item.getItemMeta(); 
-		List<String> lore = new ArrayList<String>();
-		lore.add(0, Lang.AVAILABLE_ADDONS.toString());
-		for (Addon addon : HGAPI.getAddonManager().getAddons()) {
-			List<String> addons = new ArrayList<String>();
-			addons.add(addon.getName());
-			lore.add(addons.indexOf(addon.getName()) + 1, ChatColor.GOLD + addon.getName());
-		}
-		meta.setLore(lore);
-		meta.setDisplayName(Lang.ICON_ADDONS.toString());
-		item.setItemMeta(meta);
-		return item;
-	}
-	
-	public static ItemStack getAddon(String name) {
-		ItemStack item = new ItemStack(Material.CAULDRON_ITEM);
-		ItemMeta meta = item.getItemMeta();  
-		List<String> lore = new ArrayList<String>();
-		Addon addon = HGAPI.getAddonManager().getAddon(name);
-		lore.add(0, Lang.ENABLED.toString() + ChatColor.YELLOW + String.valueOf(addon.isEnabled()));
-		lore.add(1, Lang.VERSION.toString() + ChatColor.YELLOW + addon.getVersion());
-		lore.add(2, Lang.AUTHORS.toString());
-		for (String authors : addon.getAuthors()) {
-			lore.add(ChatColor.YELLOW + authors);
-		}
-		meta.setLore(lore);
-		meta.setDisplayName(name);
 		item.setItemMeta(meta);
 		return item;
 	}
