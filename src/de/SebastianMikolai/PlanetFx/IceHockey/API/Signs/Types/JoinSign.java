@@ -12,7 +12,6 @@ import de.SebastianMikolai.PlanetFx.IceHockey.API.HGAPI;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Arena.Arena;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.SignType;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.HockeyPlayer;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.Lang;
 
 public class JoinSign implements SignType {
 
@@ -23,15 +22,15 @@ public class JoinSign implements SignType {
 			Arena arena = HGAPI.getArenaManager().getArena(arenaName);
 			if (arena.getTeam(teamName) != null) {
 				event.setLine(0, ChatColor.DARK_RED + "[IceHockey]");
-				HGAPI.sendMessage(event.getPlayer(), Lang.SUCCESS_SIGN_CREATE.toString(), false);
+				HGAPI.sendMessage(event.getPlayer(), ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("success-sign-create")), false);
 				event.getBlock().getState().update(true);
 			} else if (arena.getTeam(teamName) == null) {
-				HGAPI.sendMessage(event.getPlayer(), Lang.TEAM_DOES_NOT_EXIT.toString(), false);
+				HGAPI.sendMessage(event.getPlayer(), ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("team-does-not-exist")), false);
 				event.setCancelled(true);
 				event.getBlock().breakNaturally();
 			}
 		} else if (HGAPI.getArenaManager().getArena(arenaName) == null) {
-			HGAPI.sendMessage(event.getPlayer(), Lang.ARENA_DOES_NOT_EXIT.toString(), false);
+			HGAPI.sendMessage(event.getPlayer(), ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("arena-does-not-exist")), false);
 			event.setCancelled(true);
 			event.getBlock().breakNaturally();
 		}
@@ -54,7 +53,7 @@ public class JoinSign implements SignType {
 						arena.joinPlayer(hplayer, arena.getFirstTeam());
 						HGAPI.playSound(player, player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
 					} else {
-						HGAPI.sendMessage(player, Lang.ARENA_FULL.toString(), run);
+						HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("arena-full")), run);
 					}
 				} else if (teamName.equals(arena.getSecondTeam().getName())) {
 					HockeyPlayer hplayer = new HockeyPlayer(player);
@@ -62,18 +61,18 @@ public class JoinSign implements SignType {
 						arena.joinPlayer(hplayer, arena.getSecondTeam());
 						HGAPI.playSound(player, player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
 					} else {
-						HGAPI.sendMessage(player, Lang.ARENA_FULL.toString(), run);
+						HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("arena-full")), run);
 					}
 				}
 			} else {
-				HGAPI.sendMessage(player, Lang.GAME_RUNNING.toString(), run);
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("game-running")), run);
 			}
 		} else {
-			HGAPI.sendMessage(event.getPlayer(), Lang.ARENA_DOES_NOT_EXIT.toString(), false);
+			HGAPI.sendMessage(event.getPlayer(), ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("arena-does-not-exist")), false);
 		}
 	}
 	
 	public void handleDestroy(BlockBreakEvent event) {
-		HGAPI.sendMessage(event.getPlayer(), Lang.SUCCESS_SIGN_REMOVE.toString(), false);
+		HGAPI.sendMessage(event.getPlayer(), ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("success-sign-remove")), false);
 	}
 }

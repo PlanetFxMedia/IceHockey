@@ -1,12 +1,13 @@
 package de.SebastianMikolai.PlanetFx.IceHockey.Commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.SebastianMikolai.PlanetFx.IceHockey.API.HGAPI;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.GUI.Menus;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.ChatUtils;
 
 public class HockeyCommands implements CommandExecutor {
 	
@@ -18,7 +19,7 @@ public class HockeyCommands implements CommandExecutor {
 					Menus.openMainMenu(p);
 				}
 			} else {
-				ChatUtils.sendMessageConfig(p, "no-permission");
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("no-permission")));
 			}
 		}
 		return true;

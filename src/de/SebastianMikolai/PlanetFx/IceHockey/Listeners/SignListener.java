@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.SebastianMikolai.PlanetFx.IceHockey.API.HGAPI;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.SignType;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.Lang;
 
 public class SignListener implements Listener {
 	
@@ -21,7 +20,7 @@ public class SignListener implements Listener {
 		Player player = e.getPlayer();
 		if (e.getLine(0).equalsIgnoreCase("[PlanetFxIceHockey]")) {
 			if (!player.isOp()) {
-				HGAPI.sendMessage(player, Lang.NO_PERMISSION.toString(), false);
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("no-permission")), false);
 				e.setCancelled(true);
 				e.getBlock().breakNaturally();
 				return;
@@ -59,7 +58,7 @@ public class SignListener implements Listener {
 		Sign sign = (Sign)e.getBlock().getState();
 		if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_RED + "[PlanetFxIceHockey]")) {
 			if ((!player.hasPermission("hg.admin")) || (!player.isOp())) {
-				HGAPI.sendMessage(player, Lang.NO_PERMISSION.toString(), false);
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("no-permission")), false);
 				e.setCancelled(true);
 				return;
 			}

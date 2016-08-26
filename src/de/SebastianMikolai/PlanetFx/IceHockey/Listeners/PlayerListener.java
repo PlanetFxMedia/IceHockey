@@ -39,7 +39,6 @@ import de.SebastianMikolai.PlanetFx.IceHockey.API.Arena.Arena;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.GUI.CustomGUIMenu;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.HockeyPlayer;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.Team;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.Lang;
 
 public class PlayerListener implements Listener {
 	
@@ -50,9 +49,8 @@ public class PlayerListener implements Listener {
 			String msg = event.getMessage();
 			String[] split = msg.split(" ");
 			if ((split.length > 0) && (split[0].startsWith("/"))) {
-				String command = split[0].substring(1);
-				if (!HGAPI.getPlugin().getWhitelistCommands().contains(command)) {
-					HGAPI.sendMessage(player, Lang.NO_COMMANDS.toString() + Lang.ICON_ARENA_LEAVE.toString(), true);
+				if (!player.isOp()) {
+					HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("no-commands")) + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("icon-arena-leave")), true);
 					event.setCancelled(true);
 				}
 			}
@@ -120,7 +118,7 @@ public class PlayerListener implements Listener {
 					if (!player.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) {
 						return;
 					}
-					if (!player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Lang.HOCKEY_STICK.toString())) {
+					if (!player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("hockey-stick")))) {
 						return;
 					}
 					for (Entity entity : player.getNearbyEntities(0.6D, 0.6D, 0.6D)) {
@@ -178,9 +176,9 @@ public class PlayerListener implements Listener {
 			if ((!HGAPI.getPlugin().getDevArenas().containsKey(player.getName())) && (!HGAPI.getArenaManager().getArenas().containsKey(message))) {
 				HGAPI.getPlugin().getDevArenas().put(player.getName(), arena);
 				event.setCancelled(true); 
-				HGAPI.sendMessage(player, Lang.SELECT_THE_FIRST_TEAM.toString(), true); 
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("select-the-first-team")), true); 
 				int size = 36;
-				CustomGUIMenu menu = new CustomGUIMenu(ChatColor.stripColor(Lang.SELECT_THE_FIRST_TEAM.toString()), size);
+				CustomGUIMenu menu = new CustomGUIMenu(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("select-the-first-team"))), size);
 				List<String> keys = new ArrayList<String>(HGAPI.getTeamManager().getTeams().keySet());
 				for (i = 0; i < keys.size(); i++) {
 					String obj = (String)keys.get(i);
@@ -193,7 +191,7 @@ public class PlayerListener implements Listener {
 				}
 				player.openInventory(menu.getInventory());
 			} else if ((!HGAPI.getPlugin().getDevArenas().containsKey(player.getName())) && (HGAPI.getArenaManager().getArenas().containsKey(message))) {
-				HGAPI.sendMessage(player, Lang.ARENA_NAME_IS_TAKEN.toString(), true);
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("arena-name-is-taken")), true);
 				event.setCancelled(true);
 			}
 		}
@@ -202,9 +200,9 @@ public class PlayerListener implements Listener {
 			if ((!HGAPI.getPlugin().getDevTeams().containsKey(player.getName())) && (!HGAPI.getTeamManager().getTeams().containsKey(message))) {
 				HGAPI.getPlugin().getDevTeams().put(player.getName(), team);
 				event.setCancelled(true);
-				HGAPI.sendMessage(player, Lang.SELECT_TEAM_COLOR.toString(), true);  
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("select-team-color")), true);  
 				int size = 36;
-				CustomGUIMenu menu = new CustomGUIMenu(ChatColor.stripColor(Lang.SELECT_TEAM_COLOR.toString()), size);
+				CustomGUIMenu menu = new CustomGUIMenu(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("select-team-color"))), size);
 				for (Color color : HGAPI.getColors()) {
 					ItemStack item = new ItemStack(Material.LEATHER_HELMET);
 					LeatherArmorMeta meta = (LeatherArmorMeta)item.getItemMeta();
@@ -214,7 +212,7 @@ public class PlayerListener implements Listener {
 				}
 				player.openInventory(menu.getInventory());
 			} else if ((!HGAPI.getPlugin().getDevTeams().containsKey(player.getName())) && (HGAPI.getTeamManager().getTeams().containsKey(message))) {
-				HGAPI.sendMessage(player, Lang.TEAM_NAME_IS_TAKEN.toString(), true);
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("team-name-is-taken")), true);
 				event.setCancelled(true);
 			}
 		}
@@ -236,14 +234,12 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerDamage(EntityDamageEvent event) {
-		if (!HGAPI.checkOldMCVersion()) {
-			Entity target = event.getEntity();
-			if ((target instanceof Player)) {
-				Player player = (Player)target;
-				String name = player.getName();
-				if ((HGAPI.getPlayerManager().getPlayers().containsKey(name)) && (player.getHealth() < 4.0D)) {
-					player.setHealth(4.0D);
-				}
+		Entity target = event.getEntity();
+		if ((target instanceof Player)) {
+			Player player = (Player)target;
+			String name = player.getName();
+			if ((HGAPI.getPlayerManager().getPlayers().containsKey(name)) && (player.getHealth() < 4.0D)) {
+				player.setHealth(4.0D);
 			}
 		}
 	}
@@ -295,14 +291,12 @@ public class PlayerListener implements Listener {
 	
  	@EventHandler
  	public void onDamagePlayers(EntityDamageByEntityEvent event) {
- 		if (!HGAPI.checkOldMCVersion()) {
- 			Entity target = event.getEntity();
- 			if ((target instanceof Player)) {
- 				Player player = (Player)target;
- 				String name = player.getName();
- 				if ((HGAPI.getPlayerManager().getPlayers().containsKey(name)) && (player.getHealth() < 4.0D)) {
- 					player.setHealth(4.0D);
- 				}
+ 		Entity target = event.getEntity();
+ 		if ((target instanceof Player)) {
+ 			Player player = (Player)target;
+ 			String name = player.getName();
+ 			if ((HGAPI.getPlayerManager().getPlayers().containsKey(name)) && (player.getHealth() < 4.0D)) {
+ 				player.setHealth(4.0D);
  			}
  		}
  	}

@@ -1,9 +1,12 @@
 package de.SebastianMikolai.PlanetFx.IceHockey;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,7 +22,9 @@ public class HG extends JavaPlugin {
 	
 	private HockeyCommands hockey;
 	private HashMap<String, Arena> arenas = new HashMap<String, Arena>();
+	private List<Player> arena_creators = new ArrayList<Player>();
 	private HashMap<String, Team> teams = new HashMap<String, Team>();
+	private List<Player> teams_creators = new ArrayList<Player>();
 	
 	public void onEnable() {
 		saveDefaultConfig();
@@ -46,7 +51,9 @@ public class HG extends JavaPlugin {
 		HandlerList.unregisterAll(this);
 		hockey = null;
     	arenas.clear();
+    	arena_creators.clear();
     	teams.clear();
+    	teams_creators.clear();
 	}
 	
 	public void reloadPlugin() {
@@ -56,6 +63,14 @@ public class HG extends JavaPlugin {
 	
 	public HockeyCommands getHockeyCommands() {
 		return this.hockey;
+	}
+	
+	public List<Player> getArenaCreators() {
+		return this.arena_creators;
+	}
+	
+	public List<Player> getTeamCreators() {
+		return this.teams_creators;
 	}
 	
 	public HashMap<String, Arena> getDevArenas() {

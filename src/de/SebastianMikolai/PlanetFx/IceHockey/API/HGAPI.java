@@ -100,7 +100,7 @@ public class HGAPI {
 	}
 	
 	public static void sendMessage(Player p, String msg, boolean sound) {
-		p.sendMessage(prefix + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages." + msg)));
+		p.sendMessage(prefix + msg);
 		if (sound) {
 			playSound(p, p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 		}

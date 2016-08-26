@@ -7,7 +7,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.HGAPI;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Arena.Arena;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.HockeyPlayer;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.Lang;
 
 public class CountToStartRunnable extends BukkitRunnable {
 	
@@ -59,7 +58,7 @@ public class CountToStartRunnable extends BukkitRunnable {
 			}
 		}
 		if (this.seconds == 0) {
-			this.arena.broadcastMessage(Lang.GAME_STARTED.toString());
+			this.arena.broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("game-started")));
 			this.arena.startArena();
 		}
 		this.seconds -= 1;
