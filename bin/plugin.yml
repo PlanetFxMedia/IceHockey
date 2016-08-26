@@ -1,14 +1,10 @@
 name: PlanetFxIceHockey
-main: ykt.BeYkeRYkt.HockeyGame.HG
-description: Plugin for players :D
-author: SebastianMikolai
-version: 2.5
+version: 1.0
+author: Sebastian Mikolai
+
+main: de.SebastianMikolai.PlanetFx.PlanetFxIceHockey.HG
+
 commands:
   hockey:
-    description: Main commands
-    usage: /<command> [args]
-permissions:
-  hg.admin:
-    default: false
-  hg.playing:
-    default: true
+    description: PlanetFxIceHockey Commands
+    usage: /hockey
