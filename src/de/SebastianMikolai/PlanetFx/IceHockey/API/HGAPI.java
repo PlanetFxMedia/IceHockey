@@ -28,7 +28,6 @@ import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.SignManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.PlayerManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.TeamManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.Lang;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.PlayerSaver;
 
 public class HGAPI {
 	
@@ -38,7 +37,6 @@ public class HGAPI {
 	private static ClassManager classes;
 	private static PlayerManager players;
 	private static TeamManager teams;
-	private static PlayerSaver saver;
 	private static List<Color> colors;
 	private static AddonManager addons;
 	private String version = null;
@@ -65,7 +63,6 @@ public class HGAPI {
 		players = new PlayerManager();
     	signs = new SignManager();
     	arena = new ArenaManager();
-    	saver = new PlayerSaver();
     	colors = new ArrayList<Color>();
     	colors.add(Color.AQUA);
     	colors.add(Color.BLACK);
@@ -85,7 +82,6 @@ public class HGAPI {
     	colors.add(Color.WHITE);
     	colors.add(Color.YELLOW);
     	addons = new AddonManager(); 
-    	getItemSaver().loadAllPlayers();
     	getTeamManager().loadAllTeams();
     	getArenaManager().loadAllArenas();
     	getAddonManager().loadAddonAll();
@@ -117,10 +113,6 @@ public class HGAPI {
 	
 	public static HG getPlugin() {
 		return plugin;
-	}
-	
-	public static PlayerSaver getItemSaver() {
-		return saver;
 	}
 		
 	public static List<Color> getColors() {

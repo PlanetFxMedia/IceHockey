@@ -84,7 +84,7 @@ public class GUIListener implements Listener {
 				} else if (Icons.getArenaLeave(Lang.ICON_ARENA_LEAVE.toString()).getItemMeta().getDisplayName().equals(clicked.getItemMeta().getDisplayName())) {
 					player.closeInventory();
 					HockeyPlayer hplayer = HGAPI.getPlayerManager().getHockeyPlayer(player.getName());
-					hplayer.getArena().leavePlayer(hplayer, true);
+					hplayer.getArena().leavePlayer(hplayer);
 				} else if (Icons.getArenaManager().getItemMeta().getDisplayName().equals(clicked.getItemMeta().getDisplayName())) {
 					player.closeInventory();   
 					Menus.openArenaManagerMenu(player);

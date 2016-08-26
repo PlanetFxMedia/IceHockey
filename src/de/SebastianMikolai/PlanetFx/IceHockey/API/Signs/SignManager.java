@@ -2,10 +2,10 @@ package de.SebastianMikolai.PlanetFx.IceHockey.API.Signs;
 
 import java.util.HashMap;
 
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.Types.DefendSign;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.Types.GoalKeeperSign;
+import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.Types.AngreiferSign;
+import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.Types.TorwartSign;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.Types.JoinSign;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.Types.WingerSign;
+import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.Types.VerteidigerSign;
 
 public class SignManager {
 	
@@ -13,9 +13,9 @@ public class SignManager {
 	
 	public SignManager() {
 		addSign("[Join]", new JoinSign());
-		addSign("Defender", new DefendSign());
-		addSign("Winger", new WingerSign());
-		addSign("Goalkeeper", new GoalKeeperSign());
+		addSign("Verteidiger", new VerteidigerSign());
+		addSign("Angreifer", new AngreiferSign());
+		addSign("Torwart", new TorwartSign());
 	}
 	
 	public HashMap<String, SignType> getSigns() {

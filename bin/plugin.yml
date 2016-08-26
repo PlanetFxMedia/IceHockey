@@ -2,7 +2,7 @@ name: PlanetFxIceHockey
 version: 1.0
 author: Sebastian Mikolai
 
-main: de.SebastianMikolai.PlanetFx.PlanetFxIceHockey.HG
+main: de.SebastianMikolai.PlanetFx.IceHockey.HG
 
 commands:
   hockey:

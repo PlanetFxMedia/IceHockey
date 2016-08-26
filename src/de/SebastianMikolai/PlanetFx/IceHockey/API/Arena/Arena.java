@@ -237,7 +237,6 @@ public class Arena {
 	    PlayerJoinArenaEvent event = new PlayerJoinArenaEvent(player, this);
 	    Bukkit.getPluginManager().callEvent(event);
 	    if (!event.isCancelled()) {
-	    	HGAPI.getItemSaver().savePlayer(player.getBukkitPlayer());
 	    	player.getBukkitPlayer().getInventory().clear();
 	    	player.getBukkitPlayer().getInventory().setArmorContents(null);
 	    	player.getBukkitPlayer().updateInventory();
@@ -264,7 +263,7 @@ public class Arena {
 	    }
   	}
   	
-  	public void leavePlayer(HockeyPlayer player, boolean loadinv) {
+  	public void leavePlayer(HockeyPlayer player) {
   		PlayerLeaveArenaEvent event = new PlayerLeaveArenaEvent(player, this);
   		Bukkit.getPluginManager().callEvent(event);
   		if (!event.isCancelled()) {
@@ -284,9 +283,6 @@ public class Arena {
   			getPlayers().remove(player);
   			team.getMembers().remove(player);
   			HGAPI.getPlayerManager().removePlayer(player.getName());
-  			if (loadinv) {
-  				HGAPI.getItemSaver().loadPlayer(player.getBukkitPlayer());
-  			}
   			if ((getWinnerTeam() != null) && (team.getName().equals(getWinnerTeam().getName()))) {
   				rewardsWinner(player);
   			} else if ((getLoserTeam() != null) && (team.getName().equals(getLoserTeam().getName()))) {
@@ -596,7 +592,7 @@ public class Arena {
   			for (Iterator<HockeyPlayer> it = getPlayers().iterator(); it.hasNext();) {
   				HockeyPlayer player = (HockeyPlayer)it.next();
   				it.remove();
-  				leavePlayer(player, true);
+  				leavePlayer(player);
   			}
   			if (getPuckEntity() != null) {
   				if ((getPuckEntity().getItem() != null) && (!getPuckEntity().getItem().isDead())) {

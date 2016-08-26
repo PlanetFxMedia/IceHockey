@@ -22,7 +22,7 @@ public class JoinSign implements SignType {
 		if (HGAPI.getArenaManager().getArena(arenaName) != null) {
 			Arena arena = HGAPI.getArenaManager().getArena(arenaName);
 			if (arena.getTeam(teamName) != null) {
-				event.setLine(0, ChatColor.RED + "[" + HGAPI.getPlugin().getName() + "]");   
+				event.setLine(0, ChatColor.DARK_RED + "[IceHockey]");
 				HGAPI.sendMessage(event.getPlayer(), Lang.SUCCESS_SIGN_CREATE.toString(), false);
 				event.getBlock().getState().update(true);
 			} else if (arena.getTeam(teamName) == null) {

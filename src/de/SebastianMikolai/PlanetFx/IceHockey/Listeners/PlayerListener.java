@@ -61,8 +61,7 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoinInv(PlayerJoinEvent event) {
-		Player player = event.getPlayer();
-		HGAPI.getItemSaver().checkPlayer(player);
+//		Player player = event.getPlayer();
 	}
 	
 	@EventHandler
@@ -73,7 +72,7 @@ public class PlayerListener implements Listener {
 				HockeyPlayer hp;
 				
 				public void run() {
-					this.hp.getArena().leavePlayer(this.hp, true);
+					this.hp.getArena().leavePlayer(this.hp);
 				}
 			}, 10L);
 		}
@@ -96,7 +95,7 @@ public class PlayerListener implements Listener {
 		String name = player.getName();
 		if (HGAPI.getPlayerManager().getPlayers().containsKey(name)) {
 			HockeyPlayer hplayer = HGAPI.getPlayerManager().getHockeyPlayer(name);
-			hplayer.getArena().leavePlayer(hplayer, false);
+			hplayer.getArena().leavePlayer(hplayer);
 		}
 	}
 	
@@ -290,7 +289,7 @@ public class PlayerListener implements Listener {
 		String name = player.getName();
 		if (HGAPI.getPlayerManager().getPlayers().containsKey(name)) {
 			HockeyPlayer hplayer = HGAPI.getPlayerManager().getHockeyPlayer(name); 
-			hplayer.getArena().leavePlayer(hplayer, false);
+			hplayer.getArena().leavePlayer(hplayer);
 		}
 	}
 	

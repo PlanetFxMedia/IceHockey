@@ -2,9 +2,9 @@ package de.SebastianMikolai.PlanetFx.IceHockey.API.Classes;
 
 import java.util.HashMap;
 
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Classes.Types.Defender;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Classes.Types.Goalkeeper;
-import de.SebastianMikolai.PlanetFx.IceHockey.API.Classes.Types.Winger;
+import de.SebastianMikolai.PlanetFx.IceHockey.API.Classes.Types.Angreifer;
+import de.SebastianMikolai.PlanetFx.IceHockey.API.Classes.Types.Torwart;
+import de.SebastianMikolai.PlanetFx.IceHockey.API.Classes.Types.Verteidiger;
 
 public class ClassManager {
 	
@@ -15,9 +15,9 @@ public class ClassManager {
 	}
 	
 	private void init() {
-		addClass(new Defender());
-		addClass(new Winger());
-		addClass(new Goalkeeper());
+		addClass(new Verteidiger());
+		addClass(new Angreifer());
+		addClass(new Torwart());
 	}
 	
 	public HashMap<String, ClassType> getClasses() {
