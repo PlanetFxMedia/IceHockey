@@ -166,43 +166,43 @@ public class HGAPI {
 		}
 		if (arena.getFirstTeamLobbyLocation() == null) {
 			arena.setFirstTeamLobbyLocation(loc);
-			sendMessage(player, "second-team-set-lobby", true);
+			sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.second-team-set-lobby")), true);
 			return;
 		}
 		if (arena.getSecondTeamLobbyLocation() == null) {
 			arena.setSecondTeamLobbyLocation(loc);
-			sendMessage(player, "first-team-set-spawn", true);
+			sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.first-team-set-spawn")), true);
 			return;
 		}
 		if (arena.getFirstTeamSpawnLocation() == null) {
 			arena.setFirstTeamSpawnLocation(loc);
-			sendMessage(player, "second-team-set-spawn", true);
+			sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.second-team-set-spawn")), true);
 			return;
 		}
 		if (arena.getSecondTeamSpawnLocation() == null) {
 			arena.setSecondTeamSpawnLocation(loc);
-			sendMessage(player, "puck-set-spawn", true);
+			sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.puck-set-spawn")), true);
 			return;
 		}
 		if (arena.getPuckLocation() == null) {
 			arena.setPuckLocation(loc);
-			sendMessage(player, "set-first-gates", true);
+			sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.set-first-gates")), true);
 			return;
 		}
 		if (!arena.isFirstGatesFulled()) {
 			arena.addFirstTeamGate(loc);
-			sendMessage(player, "gate-stored", true);
+			sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.gate-stored")), true);
 			return;
 		}
 		if (!arena.isSecondGatesFulled()) {
 			arena.addSecondTeamGate(loc);
-			sendMessage(player, "gate-stored", true);
+			sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.gate-stored")), true);
 			return;
 		}
 		getArenaManager().save(arena);
 		getArenaManager().addArena(arena);
 		getPlugin().getDevArenas().remove(player.getName());
-		sendMessage(player, "arena-saved", true);
+		sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.arena-saved")), true);
 	}
 	
 	@SuppressWarnings("deprecation")

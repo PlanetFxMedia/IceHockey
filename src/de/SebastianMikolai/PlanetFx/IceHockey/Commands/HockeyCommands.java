@@ -19,7 +19,7 @@ public class HockeyCommands implements CommandExecutor {
 					Menus.openMainMenu(p);
 				}
 			} else {
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("no-permission")));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.no-permission")));
 			}
 		}
 		return true;

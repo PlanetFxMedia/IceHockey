@@ -11,7 +11,7 @@ import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.HockeyPlayer;
 public class CountToStartRunnable extends BukkitRunnable {
 	
 	private Arena arena;
-	private int seconds = HGAPI.getPlugin().getConfig().getInt("Game.CountToStart");
+	private int seconds = HGAPI.getPlugin().getConfig().getInt("GameSettings.CountToStart");
 	
 	public CountToStartRunnable(Arena arena) {
 		this.arena = arena;
@@ -27,7 +27,7 @@ public class CountToStartRunnable extends BukkitRunnable {
 				this.arena.getCountToStartRunnable().cancel();
 			}
 		}
-		if (this.arena.getPlayers().size() < HGAPI.getPlugin().getConfig().getInt("Game.MinPlayers")) {
+		if (this.arena.getPlayers().size() < HGAPI.getPlugin().getConfig().getInt("GameSettings.MinPlayers")) {
 			this.arena.stopArena();
 		}
 		if (this.seconds == 30) {
@@ -58,7 +58,7 @@ public class CountToStartRunnable extends BukkitRunnable {
 			}
 		}
 		if (this.seconds == 0) {
-			this.arena.broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("game-started")));
+			this.arena.broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.game-started")));
 			this.arena.startArena();
 		}
 		this.seconds -= 1;

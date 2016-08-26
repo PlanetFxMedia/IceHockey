@@ -16,7 +16,7 @@ public class Menus {
 		CustomGUIMenu menu = new CustomGUIMenu(ChatColor.DARK_AQUA + "[PlanetFxIceHockey]", 9);
 		menu.addItem(Icons.getArenas(), 0);
 		if (HGAPI.getPlayerManager().getHockeyPlayer(player.getName()) != null) {
-			menu.addItem(Icons.getArenaLeave(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("icon-arena-leave"))), 1);
+			menu.addItem(Icons.getArenaLeave(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.icon-arena-leave"))), 1);
 		}
 		if ((player.hasPermission("hg.admin")) || (player.isOp())) {
 			menu.addItem(Icons.getReload(), 8);
@@ -72,7 +72,7 @@ public class Menus {
 	}
 	
 	public static void openDeleterArenasMenu(Player player) {
-		CustomGUIMenu menu = new CustomGUIMenu(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("icon-delete-arena")), 45);  
+		CustomGUIMenu menu = new CustomGUIMenu(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.icon-delete-arena")), 45);  
 		List<String> musor = new ArrayList<String>();
 		for (String arenas : HGAPI.getArenaManager().getArenas().keySet()) {
 			musor.add(arenas);
@@ -84,7 +84,7 @@ public class Menus {
 	}
 	
 	public static void openStoperArenaMenu(Player player) {
-		CustomGUIMenu menu = new CustomGUIMenu(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("icon-stop-arena")), 45); 
+		CustomGUIMenu menu = new CustomGUIMenu(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.icon-stop-arena")), 45); 
 		List<String> musor = new ArrayList<String>();
 		for (String arenas : HGAPI.getArenaManager().getArenas().keySet()) {
 			musor.add(arenas);
@@ -96,7 +96,7 @@ public class Menus {
 	}
 	
 	public static void openDeleterTeamMenu(Player player) {
-		CustomGUIMenu menu = new CustomGUIMenu(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("icon-delete-item")), 45);  
+		CustomGUIMenu menu = new CustomGUIMenu(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.icon-delete-team")), 45);  
 		List<String> musor = new ArrayList<String>();
 		for (String arenas : HGAPI.getTeamManager().getTeams().keySet()) {
 			musor.add(arenas);

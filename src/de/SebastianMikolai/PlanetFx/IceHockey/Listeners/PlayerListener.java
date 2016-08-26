@@ -50,7 +50,7 @@ public class PlayerListener implements Listener {
 			String[] split = msg.split(" ");
 			if ((split.length > 0) && (split[0].startsWith("/"))) {
 				if (!player.isOp()) {
-					HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("no-commands")) + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("icon-arena-leave")), true);
+					HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.no-commands")) + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.icon-arena-leave")), true);
 					event.setCancelled(true);
 				}
 			}
@@ -118,7 +118,7 @@ public class PlayerListener implements Listener {
 					if (!player.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) {
 						return;
 					}
-					if (!player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("hockey-stick")))) {
+					if (!player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.hockey-stick")))) {
 						return;
 					}
 					for (Entity entity : player.getNearbyEntities(0.6D, 0.6D, 0.6D)) {
@@ -130,7 +130,7 @@ public class PlayerListener implements Listener {
 								Vector vi = player.getEyeLocation().getDirection();
 								hp.getArena().getPuckEntity().setLastPlayer(hp);
 								if (hp.getType().getName().equals("Winger")) {
-									beat = HGAPI.getPlugin().getConfig().getDouble("Game.PowerBeat.Winger");
+									beat = HGAPI.getPlugin().getConfig().getDouble("GameSettings.PowerBeat.Winger");
 									if (player.isSprinting()) {
 										beat = speedbonus + beat;
 									}
@@ -138,7 +138,7 @@ public class PlayerListener implements Listener {
 										vi.multiply(0.8D);
 									}
 								} else if (hp.getType().getName().equals("Defender")) {
-									beat = HGAPI.getPlugin().getConfig().getDouble("Game.PowerBeat.Defender");
+									beat = HGAPI.getPlugin().getConfig().getDouble("GameSettings.PowerBeat.Defender");
 									if (player.isSprinting()) {
 										beat = speedbonus + beat;
 									}
@@ -146,7 +146,7 @@ public class PlayerListener implements Listener {
 										vi.multiply(0.8D);
 									}
 								} else if (hp.getType().getName().equals("Goalkeeper")) {
-									beat = HGAPI.getPlugin().getConfig().getDouble("Game.PowerBeat.Goalkeeper");
+									beat = HGAPI.getPlugin().getConfig().getDouble("GameSettings.PowerBeat.Goalkeeper");
 									if (player.isSprinting()) {
 										beat = speedbonus + beat;
 									}
@@ -176,9 +176,9 @@ public class PlayerListener implements Listener {
 			if ((!HGAPI.getPlugin().getDevArenas().containsKey(player.getName())) && (!HGAPI.getArenaManager().getArenas().containsKey(message))) {
 				HGAPI.getPlugin().getDevArenas().put(player.getName(), arena);
 				event.setCancelled(true); 
-				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("select-the-first-team")), true); 
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.select-the-first-team")), true); 
 				int size = 36;
-				CustomGUIMenu menu = new CustomGUIMenu(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("select-the-first-team"))), size);
+				CustomGUIMenu menu = new CustomGUIMenu(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.select-the-first-team"))), size);
 				List<String> keys = new ArrayList<String>(HGAPI.getTeamManager().getTeams().keySet());
 				for (i = 0; i < keys.size(); i++) {
 					String obj = (String)keys.get(i);
@@ -191,7 +191,7 @@ public class PlayerListener implements Listener {
 				}
 				player.openInventory(menu.getInventory());
 			} else if ((!HGAPI.getPlugin().getDevArenas().containsKey(player.getName())) && (HGAPI.getArenaManager().getArenas().containsKey(message))) {
-				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("arena-name-is-taken")), true);
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.arena-name-is-taken")), true);
 				event.setCancelled(true);
 			}
 		}
@@ -200,9 +200,9 @@ public class PlayerListener implements Listener {
 			if ((!HGAPI.getPlugin().getDevTeams().containsKey(player.getName())) && (!HGAPI.getTeamManager().getTeams().containsKey(message))) {
 				HGAPI.getPlugin().getDevTeams().put(player.getName(), team);
 				event.setCancelled(true);
-				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("select-team-color")), true);  
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.select-team-color")), true);  
 				int size = 36;
-				CustomGUIMenu menu = new CustomGUIMenu(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("select-team-color"))), size);
+				CustomGUIMenu menu = new CustomGUIMenu(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.select-team-color"))), size);
 				for (Color color : HGAPI.getColors()) {
 					ItemStack item = new ItemStack(Material.LEATHER_HELMET);
 					LeatherArmorMeta meta = (LeatherArmorMeta)item.getItemMeta();
@@ -212,7 +212,7 @@ public class PlayerListener implements Listener {
 				}
 				player.openInventory(menu.getInventory());
 			} else if ((!HGAPI.getPlugin().getDevTeams().containsKey(player.getName())) && (HGAPI.getTeamManager().getTeams().containsKey(message))) {
-				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("team-name-is-taken")), true);
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.team-name-is-taken")), true);
 				event.setCancelled(true);
 			}
 		}

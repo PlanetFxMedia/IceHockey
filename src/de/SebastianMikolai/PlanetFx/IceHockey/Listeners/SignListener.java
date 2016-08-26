@@ -18,9 +18,9 @@ public class SignListener implements Listener {
 	@EventHandler
 	public void onSignCreate(SignChangeEvent e) {
 		Player player = e.getPlayer();
-		if (e.getLine(0).equalsIgnoreCase("[PlanetFxIceHockey]")) {
+		if (e.getLine(0).equalsIgnoreCase("[IceHockey]")) {
 			if (!player.isOp()) {
-				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("no-permission")), false);
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.no-permission")), false);
 				e.setCancelled(true);
 				e.getBlock().breakNaturally();
 				return;
@@ -41,7 +41,7 @@ public class SignListener implements Listener {
 			return;
 		}
 		Sign sign = (Sign)e.getClickedBlock().getState();
-		if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_RED + "[PlanetFxIceHockey]")) {
+		if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_RED + "[IceHockey]")) {
 			String line = sign.getLine(1);
 			if (HGAPI.getSignManager().getSigns().containsKey(line)) {
 				((SignType)HGAPI.getSignManager().getSigns().get(line)).handleClickSign(e);
@@ -56,9 +56,9 @@ public class SignListener implements Listener {
 		}
 		Player player = e.getPlayer();
 		Sign sign = (Sign)e.getBlock().getState();
-		if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_RED + "[PlanetFxIceHockey]")) {
+		if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_RED + "[IceHockey]")) {
 			if ((!player.hasPermission("hg.admin")) || (!player.isOp())) {
-				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("no-permission")), false);
+				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.no-permission")), false);
 				e.setCancelled(true);
 				return;
 			}

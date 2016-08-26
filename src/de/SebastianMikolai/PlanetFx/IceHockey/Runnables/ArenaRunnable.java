@@ -38,7 +38,7 @@ public class ArenaRunnable extends BukkitRunnable {
 			if ((this.puck.getItem() != null) && (loc.getWorld().getName().equals(this.puck.getItem().getWorld().getName())) && (loc.getBlockX() == this.puck.getItem().getLocation().getBlockX()) && (loc.getBlockY() == this.puck.getItem().getLocation().getBlockY()) && (loc.getBlockZ() == this.puck.getItem().getLocation().getBlockZ())) {
 				GoalEvent event = new GoalEvent(this.puck.getLastPlayer(), this.arena, this.puck);
 				Bukkit.getPluginManager().callEvent(event); 
-				this.arena.broadcastMessage(ChatColor.YELLOW + this.puck.getLastPlayer().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("scored-goal")) + ChatColor.GOLD + this.arena.getFirstTeam().getName());
+				this.arena.broadcastMessage(ChatColor.YELLOW + this.puck.getLastPlayer().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.scored-goal")) + ChatColor.GOLD + this.arena.getFirstTeam().getName());
 				HGAPI.spawnRandomFirework(this.arena.getWorld(), this.puck.getLastPlayer().getBukkitPlayer().getLocation());
 				this.arena.getWorld().createExplosion(loc, 0.0F);
 				this.puck.getItem().getItemStack().setAmount(0);
@@ -54,7 +54,7 @@ public class ArenaRunnable extends BukkitRunnable {
 			if ((this.puck.getItem() != null) && (loc.getWorld().getName().equals(this.puck.getItem().getWorld().getName())) && (loc.getBlockX() == this.puck.getItem().getLocation().getBlockX()) && (loc.getBlockY() == this.puck.getItem().getLocation().getBlockY()) && (loc.getBlockZ() == this.puck.getItem().getLocation().getBlockZ())) {
 				GoalEvent event = new GoalEvent(this.puck.getLastPlayer(), this.arena, this.puck);
 				Bukkit.getPluginManager().callEvent(event);
-				this.arena.broadcastMessage(ChatColor.YELLOW + this.puck.getLastPlayer().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("scored-goal")) + ChatColor.GOLD + this.arena.getSecondTeam().getName());
+				this.arena.broadcastMessage(ChatColor.YELLOW + this.puck.getLastPlayer().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.scored-goal")) + ChatColor.GOLD + this.arena.getSecondTeam().getName());
 				HGAPI.spawnRandomFirework(this.arena.getWorld(), this.puck.getLastPlayer().getBukkitPlayer().getLocation()); 
 				this.arena.getWorld().createExplosion(loc, 0.0F); 
 				this.puck.getItem().getItemStack().setAmount(0);
@@ -66,10 +66,10 @@ public class ArenaRunnable extends BukkitRunnable {
 				this.seconds += 5;
 			}
 		}
-		if (HGAPI.getPlugin().getConfig().getBoolean("Game.AutoBalance")) {
+		if (HGAPI.getPlugin().getConfig().getBoolean("GameSettings.AutoBalance")) {
 			this.arena.autobalance();
 		}
-		if (this.arena.getPlayers().size() < HGAPI.getPlugin().getConfig().getInt("Game.MinPlayers")) {
+		if (this.arena.getPlayers().size() < HGAPI.getPlugin().getConfig().getInt("GameSettings.MinPlayers")) {
 			this.arena.stopArena();
 		}
 		if ((this.seconds == this.lastgoalsec) && (this.seconds > 5)) {

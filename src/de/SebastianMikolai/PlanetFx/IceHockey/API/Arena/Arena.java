@@ -284,7 +284,7 @@ public class Arena {
   		String material_config = HGAPI.getPlugin().getConfig().getString("GameSettings.Puck.Material");
   		ItemStack item = new ItemStack(Material.getMaterial(material_config));
   		ItemMeta meta = item.getItemMeta();
-  		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("puck-name")));
+  		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.puck-name")));
   		item.setItemMeta(meta);
   		setPuck(item);
   	}
@@ -520,7 +520,7 @@ public class Arena {
   			HGAPI.playEffect(getWorld(), getPuckLocation(), Effect.ENDER_SIGNAL, 1);
   			HGAPI.playEffect(getWorld(), getPuckLocation(), Effect.MOBSPAWNER_FLAMES, 1);
   			HGAPI.playEffect(getWorld(), getPuckLocation(), Effect.SMOKE, 1);
-  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("match-continues")));
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.match-continues")));
   		} else if (event.isCancelled()) {
   			item.remove();
   		}
@@ -528,24 +528,24 @@ public class Arena {
   	
   	public void startRewards() {
   		if (getFirstTeamScores() > getSecondTeamScores()) {
-  			broadcastMessage(ChatColor.GOLD + getFirstTeam().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("team-win")));
-  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("result")) + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
+  			broadcastMessage(ChatColor.GOLD + getFirstTeam().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.team-win")));
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.result")) + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
   			for (HockeyPlayer player : getFirstTeam().getMembers()) {
   				HGAPI.spawnRandomFirework(getWorld(), player.getBukkitPlayer().getLocation());
   			}
   			setWinnerTeam(getFirstTeam());
   			setLoserTeam(getSecondTeam());
   		} else if (getFirstTeamScores() < getSecondTeamScores()) {
-  			broadcastMessage(ChatColor.GOLD + getSecondTeam().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("team-win")));
-  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("result")) + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
+  			broadcastMessage(ChatColor.GOLD + getSecondTeam().getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.team-win")));
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.result")) + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
   			for (HockeyPlayer player : getSecondTeam().getMembers()) {
   				HGAPI.spawnRandomFirework(getWorld(), player.getBukkitPlayer().getLocation());
   			}
   			setWinnerTeam(getSecondTeam());
   			setLoserTeam(getFirstTeam());
   		} else if (getFirstTeamScores() == getSecondTeamScores()) {
-  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("tie")));
-  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("result")) + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.tie")));
+  			broadcastMessage(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.result")) + ChatColor.RED + getFirstTeamScores() + ChatColor.WHITE + " : " + ChatColor.BLUE + getSecondTeamScores());
   		}
   	}
   	
