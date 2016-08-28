@@ -60,6 +60,7 @@ public class HG extends JavaPlugin {
 	public void reloadPlugin() {
 		onDisable();
 		onEnable();
+		Bukkit.reload();
 	}
 	
 	public HockeyCommands getHockeyCommands() {
