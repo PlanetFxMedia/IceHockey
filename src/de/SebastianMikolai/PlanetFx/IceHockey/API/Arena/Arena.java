@@ -27,9 +27,11 @@ import de.SebastianMikolai.PlanetFx.IceHockey.API.Events.RespawnPuckEvent;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Events.StartPlayMusicEvent;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.HockeyPlayer;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.Team;
+import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.GameState;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.ItemGiver;
 import de.SebastianMikolai.PlanetFx.IceHockey.Runnables.ArenaRunnable;
 import de.SebastianMikolai.PlanetFx.IceHockey.Runnables.CountToStartRunnable;
+import de.SebastianMikolai.PlanetFx.IceHockey.Runnables.GameEnd;
 
 public class Arena {
 	
@@ -57,14 +59,21 @@ public class Arena {
   	private boolean secondgatefull = false;
   	private Team loser;
   	private Team winner;
+  	private GameState gamestate;
   	
   	public Arena(String arenaName) {
   		this.name = arenaName;
+  		this.gamestate = GameState.Online;
   	}
   	
   	public Arena(String arenaName, World world) {
   		this.name = arenaName;
   		this.world = world;
+  		this.gamestate = GameState.Online;
+  	}
+
+  	public GameState getGameState() {
+  		return this.gamestate;
   	}
   	
   	public boolean isFirstGatesFulled() {
@@ -252,7 +261,6 @@ public class Arena {
 	      	player.getBukkitPlayer().setGameMode(GameMode.SURVIVAL);
 	      	getPlayers().add(player);
 	      	HGAPI.getPlayerManager().addPlayer(player.getName(), player);
-	      	broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.player-join-arena")) + ChatColor.GREEN + getName());
 	    }
   	}
   	
@@ -276,7 +284,6 @@ public class Arena {
   			getPlayers().remove(player);
   			team.getMembers().remove(player);
   			HGAPI.getPlayerManager().removePlayer(player.getName());
-  			broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.player-leave-arena")) + ChatColor.GREEN + getName());
   		}
   	}
   	
@@ -295,6 +302,7 @@ public class Arena {
   		getCountToStartRunnable().cancel();
     	this.countrunnable = null;
     	if (!event.isCancelled()) {
+		  	this.gamestate = GameState.Running;
     		if (getPlayers().size() < HGAPI.getPlugin().getConfig().getInt("GameSettings.MinPlayers")) {
     			stopArena();
     		}
@@ -362,7 +370,6 @@ public class Arena {
   			location.setYaw(player.getBukkitPlayer().getLocation().getYaw());
   			player.getBukkitPlayer().teleport(location);
   			player.setAllowTeleport(false);
-  			broadcastMessage(ChatColor.AQUA + "Autobalancing...");
   		}
   	}
   	
@@ -488,6 +495,7 @@ public class Arena {
   			}
   		}
   		this.countrunnable = new CountToStartRunnable(this);
+	  		this.gamestate = GameState.Waiting;
   		getCountToStartRunnable().runTaskTimer(HGAPI.getPlugin(), 0L, 20L);
   	}
   	
@@ -550,6 +558,8 @@ public class Arena {
   	}
   	
   	public void stopArena() {
+  		this.gamestate = GameState.Offline;
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(HGAPI.getPlugin(), new GameEnd(this.getWorld(), 10, this.getPuckLocation()), 0L, 20L);
   		MatchStopEvent event = new MatchStopEvent(getPlayers(), this);
   		Bukkit.getPluginManager().callEvent(event);
   		if (!event.isCancelled()) {

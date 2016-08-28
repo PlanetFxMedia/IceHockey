@@ -57,7 +57,7 @@ public class SignListener implements Listener {
 		Player player = e.getPlayer();
 		Sign sign = (Sign)e.getBlock().getState();
 		if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_RED + "[IceHockey]")) {
-			if ((!player.hasPermission("hg.admin")) || (!player.isOp())) {
+			if (!player.isOp()) {
 				HGAPI.sendMessage(player, ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.no-permission")), false);
 				e.setCancelled(true);
 				return;

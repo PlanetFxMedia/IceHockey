@@ -5,6 +5,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 import de.SebastianMikolai.PlanetFx.IceHockey.API.HGAPI;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Arena.Arena;
@@ -84,6 +88,23 @@ public class ArenaRunnable extends BukkitRunnable {
 		if (this.seconds == 0) {
 			this.arena.startRewards();
 			this.arena.stopArena();
+		}
+		for (HockeyPlayer hp : this.arena.getPlayers()) {
+			ScoreboardManager m = Bukkit.getScoreboardManager();
+			Scoreboard b = m.getNewScoreboard();
+			Objective o = b.registerNewObjective("IceHockey", "dummy");	
+			int i = 6;
+			o.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&a&lIceHockey"));
+			o.setDisplaySlot(DisplaySlot.SIDEBAR);
+			o.getScore(" ").setScore(i--);
+			o.getScore(ChatColor.translateAlternateColorCodes('&', "&4Rot &6" + arena.getFirstTeamScores() + ":" + arena.getSecondTeamScores() + " &2Grün")).setScore(i--);
+			o.getScore("  ").setScore(i--);
+			if (HGAPI.getArenaManager().isRunning(arena)) {
+				o.getScore(ChatColor.translateAlternateColorCodes('&', "&dSpielzeit: " + arena.getMainRunnable().getSeconds())).setScore(i--);
+				o.getScore("   ").setScore(i--);
+			}
+			hp.getBukkitPlayer().setScoreboard(b);	
+			hp.getBukkitPlayer().setLevel(getSeconds());
 		}
 		this.seconds -= 1;
 	}

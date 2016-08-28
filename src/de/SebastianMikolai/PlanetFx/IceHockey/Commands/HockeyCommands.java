@@ -14,7 +14,7 @@ public class HockeyCommands implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player)sender;
-			if (p.hasPermission("hockey.playing")) {
+			if (p.isOp()) {
 				if (cmd.getName().equalsIgnoreCase("hockey")) {
 					Menus.openMainMenu(p);
 				}

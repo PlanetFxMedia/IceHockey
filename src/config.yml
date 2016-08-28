@@ -53,7 +53,7 @@ Messages:
   scored-goal: '&a hat einen Punkt gewonnen beim Gate '
   team-win: '&a hat das Spiel gewonnen!'
   tie: '&7Das Match endet mit Gleichstand!'
-  result: '&6Resultate: '
+  result: '&6Endstand: '
   game-started: '&aMatch hat gestartet!'
   player-join-arena: '&6 hat die Arena betreten '
   player-leave-arena: '&6 hat die Arena verlassen '

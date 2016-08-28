@@ -45,6 +45,7 @@ public class HG extends JavaPlugin {
 	}
 	
 	public void onDisable() {
+		Bukkit.getScheduler().cancelTasks(this);
 		for (Arena arena : HGAPI.getArenaManager().getArenas().values()) {
 			arena.stopArena();
 		}

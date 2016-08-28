@@ -18,7 +18,7 @@ public class Menus {
 		if (HGAPI.getPlayerManager().getHockeyPlayer(player.getName()) != null) {
 			menu.addItem(Icons.getArenaLeave(ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.icon-arena-leave"))), 1);
 		}
-		if ((player.hasPermission("hg.admin")) || (player.isOp())) {
+		if (player.isOp()) {
 			menu.addItem(Icons.getReload(), 8);
 			menu.addItem(Icons.getArenaManager(), 3);
 			menu.addItem(Icons.getTeamManager(), 4);

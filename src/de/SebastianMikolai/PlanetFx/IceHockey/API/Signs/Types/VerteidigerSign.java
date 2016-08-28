@@ -34,7 +34,7 @@ public class VerteidigerSign implements SignType {
 		if (type != null) {
 			HockeyPlayer player = HGAPI.getPlayerManager().getHockeyPlayer(event.getPlayer().getName());
 			if (player != null) {
-				if (player.getTeam().getDefends().size() < HGAPI.getPlugin().getConfig().getInt("GameSettings.MaxDefenders")) {
+				if (player.getTeam().getDefends().size() < HGAPI.getPlugin().getConfig().getInt("GameSettings.MaxVerteidiger")) {
 					if ((player.getType() != null) && (!player.getType().getName().equals(type.getName()))) {
 						HGAPI.sendMessage(player.getBukkitPlayer(), ChatColor.translateAlternateColorCodes('&', HGAPI.getPlugin().getConfig().getString("Messages.change-class")), false);
 						HGAPI.playSound(player.getBukkitPlayer(), player.getBukkitPlayer().getLocation(), Sound.ENTITY_HORSE_ARMOR, 1, 1);

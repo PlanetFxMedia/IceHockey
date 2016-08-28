@@ -26,6 +26,7 @@ import de.SebastianMikolai.PlanetFx.IceHockey.API.Classes.ClassManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Signs.SignManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.PlayerManager;
 import de.SebastianMikolai.PlanetFx.IceHockey.API.Team.TeamManager;
+import de.SebastianMikolai.PlanetFx.IceHockey.API.Utils.GameState;
 
 public class HGAPI {
 	
@@ -69,6 +70,15 @@ public class HGAPI {
     	colors.add(Color.YELLOW);
     	getTeamManager().loadAllTeams();
     	getArenaManager().loadAllArenas();
+	}
+	
+	public static GameState getGameState(String ArenaName) {
+		Arena arena = HGAPI.getArenaManager().getArena(ArenaName);
+		if (arena != null) {
+			return arena.getGameState();
+		} else {
+			return null;
+		}
 	}
 	
 	public static ArenaManager getArenaManager() {

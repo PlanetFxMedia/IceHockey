@@ -22,6 +22,10 @@ public class CountToStartRunnable extends BukkitRunnable {
 	}
 	
 	public void run() {
+		for (HockeyPlayer hp : this.arena.getPlayers()) {
+			hp.getBukkitPlayer().setLevel(getSeconds());
+			hp.getBukkitPlayer().setExp(getSeconds() * 0.03F);
+		}
 		for (HockeyPlayer players : this.arena.getPlayers()) {
 			if (!players.isReady()) {
 				this.arena.getCountToStartRunnable().cancel();
