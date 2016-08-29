@@ -35,7 +35,7 @@ public class ArenaManager{
 	}
 	
 	public Arena getArena(String name) {
-		return (Arena)getArenas().get(name);
+		return getArenas().get(name);
 	}
 	
 	public void loadAllArenas() {

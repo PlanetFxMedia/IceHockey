@@ -157,7 +157,7 @@ public class PlayerListener implements Listener {
 						if (entity instanceof Item) {
 							Item i = (Item)entity;
 							if (i.getEntityId() == hp.getArena().getPuckEntity().getItem().getEntityId()) {
-								double speedbonus = 0.3D;
+								double speedbonus = 0.6D;
 								double beat = 0.0D;
 								Vector vi = p.getEyeLocation().getDirection();
 								hp.getArena().getPuckEntity().setLastPlayer(hp);

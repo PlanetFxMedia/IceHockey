@@ -495,7 +495,7 @@ public class Arena {
   			}
   		}
   		this.countrunnable = new CountToStartRunnable(this);
-	  		this.gamestate = GameState.Waiting;
+	  		this.gamestate = GameState.Online;
   		getCountToStartRunnable().runTaskTimer(HGAPI.getPlugin(), 0L, 20L);
   	}
   	
