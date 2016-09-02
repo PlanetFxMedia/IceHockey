@@ -81,7 +81,6 @@ public class HGAPI {
 				return GameState.Online;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return GameState.Online;
 		}
 	}
