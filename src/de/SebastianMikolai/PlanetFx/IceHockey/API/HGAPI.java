@@ -73,15 +73,11 @@ public class HGAPI {
 	}
 	
 	public static GameState getGameState(String ArenaName) {
-		try {
-			Arena arena = HGAPI.getArenaManager().getArena(ArenaName);
-			if (arena != null) {
-				return arena.getGameState();
-			} else {
-				return GameState.Online;
-			}
-		} catch (Exception e) {
-			return GameState.Online;
+		Arena arena = HGAPI.getArenaManager().getArena(ArenaName);
+		if (arena != null) {
+			return arena.getGameState();
+		} else {
+			return GameState.Offline;
 		}
 	}
 	
